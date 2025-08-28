@@ -1,0 +1,924 @@
+https://community.skillupclub.co/      --community skillup club
+https://konf.me/q651944  --quiz
+
+
+****************************
+# lsb_release -a     -- to check os release in ubuntu
+
+
+sudo useradd -m jenny -- add user in ubuntu -m for make
+sudo passwd jenny     -- to set password
+su jenny -- swithch user
+whoami -- to check user
+cd /home ---user details 
+sudo apt-get update   --- download new lates package
+sudo apt-get upgrade  --  update existing packages
+
+sudo apt-get install docker.io   -- to install docker
+sudo apt purge docker    -- uninstall/remove docker
+
+head file.txt -n 3    -- in file you want to check first 3 lines
+tail file.txt -n 2    -- in file you want to check last 3 lines 
+
+
+1. sudo useradd -m yamaha   --- #create user #when user is created then it will automaticallly/(default group is created) add in group # yamaha:x:1001:1001::/home/yamaha:/bin/sh   normal shell not bash #but for ubuntu user bash is there
+
+2. passwd username
+
+3. passwd -e username  -- #for reset password while firstlogin //run sequentially useradd/passwd/passwd -e
+
+4. sudo /etc/passwd         --- #user location
+
+5. sudo groupadd devops     ---- #create group 
+
+6. cat /etc/group           --- # group location
+
+7. sudo usermod -aG devops ubuntu  -- # add user in group #-aG = Append to a group #devops=groupname ubuntu=username
+   sudo usermod -aG groupname username
+
+8. sudo gpasswd -M MG,toyota tata  --# add multiple users in group at a time # -M= for multiple user ##MG & toyota = username # tata=groupname
+   sudo gpasswd -M user1,user2 groupname
+
+9. sudo chgrp newgroupname filename -- # change groupname of file
+   sudo chgrp tata sample1
+
+10. ll sample1  -- #to cheeck file permissions
+file permissionsdefault permission is of any file =662 i.e -rw-rw-r--
+default permission is of any directory =  775 i.e drwxrwxr-x
+
+-rwxrw-rw-   -- #- indicate file #rwx :for user #rw- :for group #rw- :for other user
+drwxrw-rw-   --# d= directory
+
+r=read = 4
+w=write = 2
+x=excute = 1
+
+ r  w  x
+ 
+ 1  1  1    7
+ 1  1  0    6
+ 1  0  1    5
+ 1  0  0    4
+ 0  1  1    3
+ 0  1  0    2
+ 0  0  1    1
+ 0  0  0    0
+ 
+11. chmod 777 file.txt    # to give file permissions
+    
+12. chmod +x filename    # to five 775 permission directly
+  
+    chmod +r sample.txt    # to give read permission to all
+	
+	chmod +w sample.txt     # for write permission to all
+	
+	chmod -r sample.txt    # remov read permission from all
+	
+	chmod u+rwx sample.txt  #Add read, write, and execute permissions for the owner only:
+
+    chmod g+rx sample.txt   #Add read and execute permissions for the group:
+	
+	chmod u=rw,g=r,o=r sample.txt   #Set specific permissions using symbolic notation (e.g., read/write for owner, read-only for group and others)
+
+13. #SSH
+    ssh 192.168.100.1                      
+    ssh -i privatekey ubuntu@192.168.1.100 or DNS    # connect using private key
+	
+	ssh-keygen   #create private and public key  press enterenter #public and privete key will be generated in .ssh folder
+	
+	copy open publickey copy it and go on server B .ssh--> vi autorized_keys -->paste it
+	
+	server A= private key  Sever B = Public key
+	
+	run below command from server A /connection will establish
+	
+	ssh -i privatekey ubuntu@192.168.1.100 or DNS
+	
+	
+	Server A    --------> Server B
+	Private key            public key
+	
+	
+14. history > all_commands.txt      #all excuted command stored in all_command.txt file
+
+15. whoami      --# to check current logged in user name
+
+16. / -- top level directory(root directory)
+
+17. bin -- #all linux command
+
+18. man cp --# manual of cp command
+
+19. /dev -- #device
+
+20. /var  --# logs stored in thi file
+
+21. /home --#all useres present here which you have created
+
+22. rm -r file*          --#to delete all filews starts from file # -r stand for recursively mean ripitative way(barbar) #bcz filefolder mdhe other files asu shktat so 
+
+23. touch file{1..10}.txt	  --  in one shot file1.txt to file10.txt 10 files created at a time
+
+24. ls -l--> #list the files and directories in long list format with extra information
+
+25. ls -a --> #list all including hidden files and directory
+
+26. ls *.sh --> #list all the files having .sh extension.
+
+27. ls -i  --> #list the files and directories with index numbers inodes
+
+28. ls -d */ --> list only directories.(we can also specify a pattern)
+
+29. scp -i key.pem sample.txt  user@20.50.50.50:/home/user/   # secure copy command used to copy file from local ec2 to remote ec2 (linux - linux)
+    
+	scp -i key.pem user@20.50.50.50:/home/user/logfile.txt  . or current location path # secure copy command used to copy file from remote ec2 to local ec2 (linux - linux)
+    
+	#find
+30. sudo find / -name nagios.cmd                                  #find file on server in root / directory 	
+    find / -name "*.log"
+ 
+31. ls -l /usr/local/nagios/var/nagios.lock                        # list file same as fine=d
+
+32. systemctl                                     # to start , stop ,status, restart
+    systemctl status ssh
+
+33. grep # global error expression print # for pattern or regular expression
+
+   grep ERROR app.log                 # to fetch error keyword in app.log file # case sensitive only capital ERROR logs will fetch 
+   
+   grep -i error app.log             # case insensitive caps + small ERROR +error
+   
+   grep -ir sample /home/ubuntu        #-i=case insensitive r = recursive# grep sample word in directories # 
+   
+34 awk  # scan file column wise and fetch the data #programm file content and analyze ##file requiremnt --> space seperated values
+
+   awk '/WARN/ {print $1,$2,$3,$4}' app.log    # from this file only first 4 column will print 
+
+   awk '/WARN/ {print NR,$4}' app.log          # print all no of rows having warning is present   #$4 warning msg present in column 4 so $4 
+   
+   awk 'NR>=1 && NR<=10 /WARN/ {print NR,$1,$2,$4}' app.log   # row 1 to 10 mai kitni bar warning ayyi with time  # $1 for date, $2= time, $4=warning msg 
+                                                              #required column jo jo chahiye wo column print kra skte ho
+
+   awk 'NR>="2015-07-01" && NR<="2015-01-30" /WARN/ {print NR,$1,$2,$4}' app.log    #fetch only july month logs
+   
+   ======================
+   ls -ltr | awk 'print {$NF}' -> to print last files and directoey names column
+   
+   
+35 sed   # stream editor #for replace
+
+  example-1
+
+  vim qa.env
+  username=test
+  password=test@123
+  dbpassword=test@123
+  
+  same env file I want to write for dev as well. then no need to right all content 
+  
+  touch dev.env
+  
+  sed 's/test@123/sample@123/g' qa.env     #s=string g= globally
+  
+  sed 's/test@123/sample@123' qa.env > dev.env   # dev.env mai as it qa.env file ka content aa jayga
+  
+  
+  example-2
+  
+   root@ip-172-31-9-151:~# df -h
+   
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root       6.8G  5.9G  855M  88% /
+tmpfs           479M     0  479M   0% /dev/shm
+tmpfs           192M  884K  191M   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+
+Now I want to replace in output temprarely for better unserstanding to anyone#edited output save krto
+
+df -h | sed 's/tmpfs/HDD/g'
+
+output -->
+
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root       6.8G  5.9G  855M  88% /
+HDD           479M     0  479M   0% /dev/shm
+HDD           192M  884K  191M   1% /run
+HDD           5.0M     0  5.0M   0% /run/lock
+
+
+If you run df -h command again then output same as previous i.e. tmpfs
+
+
+34. lsblk # to check disks availble
+
+35. df -Th       # command in Linux is used to display information about the file systems mounted on your system, including their type and disk space usage.
+    
+	  -T: Shows the type of each file system (e.g., ext4, tmpfs, nfs, etc.).
+      -h: Stands for "human-readable," which displays the sizes in a more readable format, such as MB, GB, etc., rather than in bytes.
+
+36. fdisk -l | grep -i Gib | grep -v mapper                 # print only disk excluding partiation
+
+37. fdisk -l         ##command is used to list the partition tables of all available hard drives on a Linux system.
+
+38. lsof -i:8081    #perticular port vr knti process running ahe ti kill kru shkto.  using kill -9 pid
+
+34. #file system
+
+     #volume attach = vloume is attached but not accible to VM # Mount = volume ko useable banane k liye mount krna pdega
+    Linux everything is a directory or file.  volume we know only system unable to understand .
+
+    you creted just volume and attached to ec2. its only attached not mount.  #xvdk     202:160  0   10G  0 disk ___  #mount ponit is blank not mounted
+ 
+    this attached volume present in lsblk (blocks)  block storage
+
+    we need to convert this in to file
+===============================================	HARD link and SOFT link======================
+####HARD link and SOFT link
+
+#softlink   **different inode number
+
+ln -s filepath linkname  -->
+
+ln = link name
+s = soft link
+filepath to crete softlink 
+linkname--> you can provide any
+
+when you crete softlink color will RED
+
+when you crete soft link I node number (ls -li) is different hence if you delete main file softink color will change and you are not able to access file   
+
+
+Ex: ln -s links/demo/linkfile.txt links_S    --> you can 
+    ls -li links_S
+	ls -li links/demo/linkfile.txt
+	
+#Hardlink     **same inode number
+
+ln links/demo/linkfile.txt links_h
+
+if you delete main file then also you can able to access this file using hardlink bacause of same inode number
+
+###inode number= pointing file location in disk
+
+=============================================================================================================
+ # TO print top 5 CPU/MEMORY usage
+
+ps aux --sort=-cpu% | head 5
+
+#Shows systemd logs with errors and warnings
+journalctl -xe
+
+===============================================================
+##Cut command = The cut command is used to extract sections from each line of input—like columns, characters, or byte positions.
+
+Syntax= cut OPTION... [FILE]
+
+ Common Options
+| Option       | Description                                        |
+| ------------ | -------------------------------------------------- |
+| `-c`         | Select **characters** by position (e.g., `-c 1-5`) |
+| `-b`         | Select **bytes** by position (used in binary data) |
+| `-d 'DELIM'` | Set the **delimiter** for fields (default is TAB)  |
+| `-f`         | Select **fields** by number (used with `-d`)       |
+
+EX- Extract characters 1 to 5:
+
+echo "Ganpati" | cut -c 1-5
+# Output: Ganpa
+
+EX2 - Extract first field using space as delimiter:
+echo "Sushant Mangaonkar" | cut -d " " -f 1
+# Output: Sushant
+
+EX3= cut -d "@" -f 2 email.txt
+# Output: gmail.com, yahoo.com, ...
+
+EX4=Combine with tr to handle multiple spaces:
+cat file.txt | tr -s ' ' | cut -d ' ' -f 2
+
+=========================================================AW K command======================================'
+link=== https://www.youtube.com/watch?v=ETF6CapGAvc
+###AWK command
+
+#to print last column 
+awk -F, '{print $NF}' employee.csv
+
+-F = fileld seperator
+, = csv data present seperated by ,
+NF = Number of field
+
+#To print all data 
+awk -F, '{print $0}' employee.csv
+
+#to print specifuc columnn
+awk -F, '{print $1, $2}' empoloyee.csv
+
+#TO search specifuc keyword in complete file #you can use grep as well
+awk -F, '/brown/{print $0}' employee.csv
+awk -F, '/brown|john/{print $0}' employee.csv   #to print multile letters
+
+# To add coulmn number in front of every row
+awk -F, '{print NR,$0}' employee.csv
+
+# to print specific row from file
+awk -F, 'NR == 3{print $0}' employee.csv
+NR= Number of row 
+
+#TO print blank line
+awk -F, 'NF==0 {print NR}' employee.csv
+
+# TO print sallary greater than
+awk -F, '$4>70000 {print $0}' employee.csv  #sallry column at 4 number hence $4
+awk -F, '$NF>70000 {print $0}' employee.csv  # sallary column at last Number hence $NF
+
+#Multi deliminator
+
+cat multidel >> Hello All, very Good Morning: Good-Day / BOOOOOOOOOOOOOM
+
+awk -F[,:-/] '{print $1}' multidel.txt  o/p-->Hello All
+awk -F[,:-] '{print $3}' multidel.txt   o/p--> Good
+
+#to check specifuc keuword from command output
+systemctl status apache2 | awk 'NR==3 {print $2,$3}'
+o/p- active running
+
+# to print last column from command output
+ls -ltr | awk 'NR>1 {print $NF}'  # NR>1 to print output after row 1, $NF for print last column, for specific column $1,$2 any
+# To print last column 
+ls -1   
+
+#To print logs in between specifuc timestamp
+less logfile | awk '$2>="10:20:00" && $2<="10:32:20"    ##$2 for coulumn of time
+
+###less command -->#The less command in Linux/Unix is used to view the contents of a file one screen at a time, making it easier to read large files. Unlike cat, 
+which dumps the whole file to the terminal, less is interactive and allows scrolling, searching, and navigating within the file
+less filename
+
+Key	Action
+Space	Scroll forward one page
+b	Scroll backward one page
+Enter	Move forward one line
+j/k	Move down/up one line
+/word	Search forward for "word"
+?word	Search backward for "word"
+n/N	Repeat last search forward/backward
+g	Go to beginning of file
+G	Go to end of file
+q	Quit less
+
+#To check files modifies in jun
+ls -ltr | awk '$6=="Jun"'        #$6= for column 6
+
+#To printout error message in complete log file between specific timestamp
+awk '$2 >= "10:23:42" && $2 <= "10:33:59" && tolower($0) ~ /error/' logfile
+
+#To replace spacific word from file and print 
+
+awk '{gsub ("Nina","NinaNina" ) ; gsub("Tom" , "Tommy"); print $0}' employee.csv
+awk '{gsub ("Nina","NinaNina"); print $0}' employee.csv
+
+#to print lenth of column words (each word).
+awk -F, 'NR>1 {print length($4)}' employee.csv  # skipping row 1
+
+#TO add start and end sentence to any file
+awk 'BEGIN{print "-----THE-START-----"} {print $0} END{print "------THE-END-----"}' employee.csv
+
+#TO print sum of sallry present in column 4
+awk -F, '{sum=sum+$4} END{print "sum of sallary: " sum}' employee.csv
+
+#TO count number of rows/employes
+awk -F, '{count ++} END{print "count of emp: " count}' employee.csv
+awk -F, 'NR>1 {if(NF>0)count++} END{print"number of employes: " count}' employee.csv  #removing blank line and header line
+
+======================================================SED command==============
+DOC link== https://docs.google.com/document/d/1bDRq0TUUs-tqPjOpvWdGsqN9_txHmWVFQH3FC-FFy5g/edit?usp=sharing
+
+###Stream editor for filtering and transforming text.
+
+#to replace any word globally in file
+sed 's/Emma/umma/g' sed.txt
+S=substutute
+Emma = current word
+Umma = new word 
+g = for global
+
+#to replace any word globally in file from mentioned line 
+sed '2 s/USA/India/g' sed.txt    #2 line number
+
+#sed -n '3p' sed.txt
+3p= print only line number 3
+-n= Suppresses automatic printing of lines (by default, sed prints every line).
+$p = for last line
+'2,7p' = specific range to print line number 2 to 7'
+
+#TO print multiple lines
+sed -n -e'2p' -e'5p' sed.txt
+
+-e = multiple expressions
+
+#To replace country for perticular user
+sed '/Bob/ s/USA/India/g' sed.txt     ##Bob=username /bob/ for search
+
+#to delete specific line
+sed '2d' sed.txt   #2 line number #d= delete
+sed '$d' sed.txt    # to delete last line
+
+# TO replace empty line
+sed '/^$/d' sed.txt   #^$ for empty line
+
+#TO add date at 1st line
+sed '1 e date' sed.txt    # e for expressions
+
+#TO find names starts from A to D in names file
+ sed -n '/[A-D]/p' sed.txt
+
+#POSIX Classes
+
+Example: sed -n ‘/[[:alpha:]]/p’ posix
+
+[:alnum:]
+[:alpha:]
+[:digit:]
+[:blank:]
+[:lower:]
+[:upper:]
+[:punct:]
+[:space:]
+
+
+==========================================================================
+#to check linux command type
+type cd   >> shell default command
+
+# to run sequential command
+date ; ls
+
+#history
+fc command number
+fc 1012 1023 
+
+
+#whereis ls  # to check where ls command is present
+
+#if command presnt in /tmp then need to export path of this command
+echo $PATH
+locate ls
+
+#to check variables
+env
+=====================================================================TYPES of COmmand=====================================================
+alias:
+keyword (if else while do for)
+builtin #come with shell default
+function
+filesystem  # presents in usr/bin or usr/sbin
+
+To check command type:
+type ls : ls is aliased to `ls --color=auto'  #output will be print in color format
+#TO check alias command
+alias
+
+#unalias
+unalias ls    # ls command unalised ho jaygi
+
+#
+type cd = cd is a shell builtin
+type mkdir = mkdir is /usr/bin/mkdir
+
+#ls
+ls -l*
+ls -l?
+ls -
+
+#content read operators(< > >> 2> &>)
+cat < meassges
+less < meaaages   # msg cha o/p cat command la default 
+date > messages  #override the existing file
+
+to avoid this
+
+date >> messages
+
+date 2> tmp  #print output with error
+====================================
+
+#UMASK
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+	
+
+
+	
+	
+	
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+*****************************************
+
+
+###*******************SHELL SCRITING***********###
+
+##Variable
+Name="Sushant"
+Mobile=55565656
+
+echo" $name $Mobile"
+
+##type=2 to store command output in variable
+HOSTNAME= $(hostname)
+present_working_D=$(pwd)
+DATE=$(date)
+
+echo "system name is $HOSTNAME , present working dir is $present_working_D , Todays date and time is $DATE"
+
+##type=3 define constant variable will not be override (FIXED)
+readonly Company="Audi"
+
+echo "company name is = $Company "
+
+
+
+
+
+
+#!/bin/bash    -- Shebang operator for which sell you are using /bin for  binaray directory in linux
+
+
+ chmod 700 file.sh   ---covert normal text file in executable/color change form white to green
+ 
+ 
+ Example:
+ 
+ #!bin/bash
+ echo "hello world"
+ echo "today : $(date)"
+ echo " RAM is : $(free -h)"
+
+
+linux commad to extract column from command
+
+free -h | awk '{print $2}'   -- disply only used memory
+
+free -h | awk ' NR ==2 {print $2}'   -- disply only used memory  NR= no of row
+
+ 
+ 
+ 
+#!bin/bash
+df -h | awk '{print $2}'  -- to print only size column
+
+$(df -h | awk 'NR==2 {print $2}')
+************************************
+vi user.sh
+#!bin/bash
+
+rank=1
+echo "rank of rancho : $rank"
+echo " chatur ki rank kya thi "
+read rank                      -- command to get input form user
+echo " chatur ki rank kya thi: $rank"
+
+
+save & exit 
+
+./user.sh   
+enter klynnter user input dya value print hoil
+
+
+***********************
+vi user.sh
+#!bin/bash
+
+rank=1
+echo "rank of rancho : $3"
+echo " chatur ki rank kya thi: $4 "
+echo " raju ki rank kya thi: $1 "
+
+save & exit 
+
+./user.sh 29 30 1 2        #passing arguements while executation $1 $2 $3 $4
+
+****************************************
+
+vi user.sh
+#!bin/bash
+
+rank=1
+echo "rank of rancho : $3"
+echo " chatur ki rank kya thi: $4 "
+echo " raju ki rank kya thi: $1 "
+
+if [$1 -eq "1"]; then
+  echo " raju is topper "
+fi                                   #close if loop
+
+
+
+
+save & exit 
+
+./user.sh 29 30 1 2        #passing arguements while executation $1 $2 $3 $4
+
+*****************************************
+vi user.sh
+#!bin/bash
+
+rank=1
+echo "rank of rancho : $3"
+echo " chatur ki rank kya thi: $4 "
+echo " raju ki rank kya thi: $1 "
+
+if [$1 -eq "1"]; then
+  echo " raju is topper "
+  
+elif [$2 -eq "1"]; then
+  echo " farhan is topper "
+
+elif [$3 -eq "1"]; then
+  echo " chatur is topper " 
+  
+elif [$4 -eq "1"]; then
+  echo " master is topper " 
+  
+*************************************************************
+
+#!/bin/bash
+
+<< discllaimer   # you can use any keyword here
+1
+2
+3
+
+disclaimer
+
+
+save exit & run 
+
+no any kind of output will print
+
+
+save & exit 
+
+./user.sh 29 30 1 2        #passing arguements while executation $1 $2 $3 $4
+
+*****************************************
+user.sh
+ #!/bin/bash
+ 
+ read -p " Enter username:" username
+ read -p " Enter password:" password
+ 
+ sudo useradd -m $usrname -p $password
+ 
+ echo "$usrname created sucessfully"
+ 
+ 
+ 
+ save & exit provide usrname and passowrd runtime while executing
+ 
+ ./user.sh
+ 
+ ***********************************************************************
+# create 5 user at a time in loop
+
+ vi user.sh 
+ 
+ #!/bin/bash
+ for (( i=1; i<=5; i++ ))
+ do
+ 
+ 
+ read -p " Enter username:" username
+ read -p " Enter password:" password
+ 
+ sudo useradd -m $usrname -p $password
+ 
+ echo "$usrname created sucessfully"
+ done
+ 
+ 
+ 
+ save & exit provide usrname and passowrd runtime while executing
+ 
+ ./user.sh
+ 
+ 
+***************************************************************** 
+#create user throught function
+ vi user.sh 
+ 
+ #!/bin/bash
+#define funtion
+function_createuser {
+ read -p " Enter username:" username
+ read -p " Enter password:" password
+ 
+ sudo useradd -m $usrname -p $password
+ 
+ echo "$usrname created sucessfully"
+}
+ 
+ 
+ for (( i=1; i<=5; i++ ))
+ do
+    echo ""
+ done
+ 
+createuser            #call function
+ save & exit provide usrname and passowrd runtime while executing
+ 
+ ./user.sh
+
+ 
+ *******************************************************
+ 
+#user add & delete
+
+vi  create &userdelete
+
+#define funtion
+function_createuser {
+ read -p " Enter username:" username
+ read -p " Enter password:" password
+ 
+ sudo useradd -m $usrname -p $password
+ 
+ echo "$usrname created sucessfully"
+}
+
+# Function to delete a user
+function delete_user {
+    read -p "Enter username to delete: " username
+
+    # Delete the user
+    sudo userdel -r "$username"
+
+    if [ $? -eq 0 ]; then
+        echo "User $username deleted successfully."
+    else
+        echo "Failed to delete user $username."
+    fi
+}
+
+
+case "$1" in 
+       c)
+	   echo " create user in progress
+	   create_user
+	   ;;
+	   d)
+	   echo "delete user in progress"
+	   delete_user
+esac
+
+
+
+./useraddddel pass shortforms which u mentioned like c and d output will comes accordingly
+***************************************************
+
+#backup
+
+vim backup.sh
+
+<<readme
+scripts take backup of giver directory
+usage:
+./backup.sh <path pf directory> 
+readme
+
+
+source_dir=$1
+timestamp=$(date '+%Y_%M_%d_%H_%M_%S')                #+ for format data year month day hour minute second
+
+backup_dir="${source_dir}/backup_${timestamp}"         # same source path la backup create hoil you can chnage path here for backup #
+
+zip -r "${backup_dir}.zip" "${source_dir}"             #source dir la compress zip krnar#  other folder is also present at same source path directory
+ 
+#zip -r "${backup_dir}.zip" "${source_dir}"  > /dev/null  # hide output like iska output kuch ni hai #dev for device
+if[$? -eq 0 ]; then 
+
+       echo "backup created sucessfully"
+
+else 
+       echo "backup was nor performed for $timestamp
+
+fi
+ 
+
+********************************************
+ls -t to check latest backup
+
+#need only top 5                        
+
+ls -t backip_* | head -5      # print top 5 latest backup 
+
+*****************************************
+
+###backup&rotation
+
+#below script not 100%correct plz resolve error
+
+vim backup.sh
+
+<<readme
+scripts take backup of giver directory
+usage:
+./backup.sh <path pf directory> 
+readme
+
+
+source_dir=$1
+timestamp=$(date '+%Y_%M_%d_%H_%M_%S')                #+ for format data year month day hour minute second
+
+backup_dir="${source_dir}/backup_${timestamp}"         # same source path la backup create hoil you can chnage path here for backup #
+
+zip -r "${backup_dir}.zip" "${source_dir}"             #source dir la compress zip krnar#  other folder is also present at same source path directory
+ 
+#zip -r "${backup_dir}.zip" "${source_dir}"  > /dev/null  # hide output like iska output kuch ni hai #dev for device
+if[$? -eq 0 ]; then 
+
+       echo "backup created sucessfully"
+
+else 
+       echo "backup was nor performed for $timestamp
+
+fi
+
+function perform_rotation {
+          backip=$(ls -t "$back_dir/backup_*.zip)    # you can cretye different target dir and use
+		  echo "$backups[@]"                        # to print all valus of array a=[1,2,3,4,5,6,7,8]
+ 
+          if [ "backups[@]" -gt 5 ]; then          # backuplength more then 5 then delete it
+		      backups_to_remove=${backups[@]:5}}  # latest 5 #fkt 5 chya pudhche distil
+		  fi
+		  echo "-------"
+		  echo "${backip_to remove}"
+
+}
+
+perform_rotation
+
+****************************************
+
+crontab -e
+set time to backup for backup
+ ***** filescriptpath source destination
+
